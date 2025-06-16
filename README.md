@@ -1,6 +1,6 @@
 # flutter_doc_scanner
 
-A Flutter plugin for document scanning on Android, iOS, and Web using ML Kit Document Scanner API and VisionKit.
+A Flutter plugin for document scanning on Android, iOS using ML Kit Document Scanner API and VisionKit.
 
 [![pub package](https://img.shields.io/pub/v/flutter_doc_scanner.svg)](https://pub.dev/packages/flutter_doc_scanner)
 
@@ -52,7 +52,7 @@ Use the following function for document scanning on Android and iOS:
   //by default way they fetch pdf for android and png for iOS
   dynamic scannedDocuments;
   try {
-    scannedDocuments = await FlutterDocScanner().getScanDocuments(page: 3) ??
+    scannedDocuments = await FlutterDocScanner().getScannedDocumentAsImages(page: 3) ??
         'Unknown platform documents';
   } on PlatformException {
     scannedDocuments = 'Failed to get scanned documents.';
@@ -64,7 +64,7 @@ Use the following function for document scanning on Android and iOS:
 
 
 ## Project Setup
-Follow the steps below to set up your Flutter project on Android, iOS, and Web.
+Follow the steps below to set up your Flutter project on Android, iOS.
 
 ### Android
 
@@ -130,9 +130,6 @@ platform :ios, '13.0'
      end
    end
    ```
-
-### Web
-Currently, we have removed web support for this library. For document scanning on the web, you can use the following library: [flutter_doc_scanner_web](https://pub.dev/packages/flutter_doc_scanner_web).
 
 ## Issues and Feedback
 

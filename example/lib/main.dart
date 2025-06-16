@@ -4,14 +4,14 @@ import 'package:flutter_doc_scanner/flutter_doc_scanner.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -20,31 +20,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   dynamic _scannedDocuments;
 
-  Future<void> scanDocument() async {
-    dynamic scannedDocuments;
-    try {
-      scannedDocuments = await FlutterDocScanner().getScanDocuments(page: 4) ??
-          'Unknown platform documents';
-    } on PlatformException {
-      scannedDocuments = 'Failed to get scanned documents.';
-    }
-    print(scannedDocuments.toString());
-    if (!mounted) return;
-    setState(() {
-      _scannedDocuments = scannedDocuments;
-    });
-  }
-
   Future<void> scanDocumentAsImages() async {
     dynamic scannedDocuments;
     try {
-      scannedDocuments =
-          await FlutterDocScanner().getScannedDocumentAsImages(page: 4) ??
-              'Unknown platform documents';
+      scannedDocuments = await FlutterDocScanner().getScannedDocumentAsImages(page: 4) ?? 'Unknown platform documents';
     } on PlatformException {
       scannedDocuments = 'Failed to get scanned documents.';
     }
-    print(scannedDocuments.toString());
+    debugPrint(scannedDocuments.toString());
     if (!mounted) return;
     setState(() {
       _scannedDocuments = scannedDocuments;
@@ -54,30 +37,11 @@ class _MyAppState extends State<MyApp> {
   Future<void> scanDocumentAsPdf() async {
     dynamic scannedDocuments;
     try {
-      scannedDocuments =
-          await FlutterDocScanner().getScannedDocumentAsPdf(page: 4) ??
-              'Unknown platform documents';
+      scannedDocuments = await FlutterDocScanner().getScannedDocumentAsPdf(page: 4) ?? 'Unknown platform documents';
     } on PlatformException {
       scannedDocuments = 'Failed to get scanned documents.';
     }
-    print(scannedDocuments.toString());
-    if (!mounted) return;
-    setState(() {
-      _scannedDocuments = scannedDocuments;
-    });
-  }
-
-  Future<void> scanDocumentUri() async {
-    //This Feature only supported for Android.
-    dynamic scannedDocuments;
-    try {
-      scannedDocuments =
-          await FlutterDocScanner().getScanDocumentsUri(page: 4) ??
-              'Unknown platform documents';
-    } on PlatformException {
-      scannedDocuments = 'Failed to get scanned documents.';
-    }
-    print(scannedDocuments.toString());
+    debugPrint(scannedDocuments.toString());
     if (!mounted) return;
     setState(() {
       _scannedDocuments = scannedDocuments;
@@ -97,9 +61,7 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _scannedDocuments != null
-                    ? Text(_scannedDocuments.toString())
-                    : const Text("No Documents Scanned"),
+                _scannedDocuments != null ? Text(_scannedDocuments.toString()) : const Text("No Documents Scanned"),
               ],
             ),
           ),
@@ -113,16 +75,7 @@ class _MyAppState extends State<MyApp> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    scanDocument();
-                  },
-                  child: const Text("Scan Documents"),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    scanDocument();
+                    scanDocumentAsImages();
                   },
                   child: const Text("Scan Documents As Images"),
                 ),
@@ -131,18 +84,9 @@ class _MyAppState extends State<MyApp> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    scanDocument();
+                    scanDocumentAsPdf();
                   },
                   child: const Text("Scan Documents As PDF"),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    scanDocumentUri();
-                  },
-                  child: const Text("Get Scan Documents URI"),
                 ),
               ),
             ],
